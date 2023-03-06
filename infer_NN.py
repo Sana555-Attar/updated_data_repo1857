@@ -20,6 +20,7 @@ args = {'sentence' : ["Coworkers At Bathroom Sink Locked In Tense Standoff Over 
 tsk.connect(args)
 #tokenize input sentences
 sequences = tokenizer.texts_to_sequences(args['sentence'])
+print(args['sentence'])
 #pad sequences to max_len
 padded =tf.keras.preprocessing.sequence.pad_sequences(sequences, maxlen=100, padding='post', truncating='post')
 
