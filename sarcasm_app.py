@@ -119,7 +119,7 @@ with demo:
         gr.Label("SARCASM DETECTION",color="#BF5FFF")
     with gr.Row():
         with gr.Column():
-            gr.Label("Sheldon quest to understand Leonard's sarcasm",color="#BF5FFF")
+            gr.Label("Sheldon's quest to understand Leonard's sarcasm",color="#BF5FFF")
     with gr.Row():
         with gr.Column():
             text = gr.Textbox(label="Model input sentence")
