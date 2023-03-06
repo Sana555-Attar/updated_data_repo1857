@@ -42,6 +42,7 @@ def classify_DNN(sentence):
         label = 'SARCASTIC'
     else:
         label = 'NORMAL'
+        score[0] = 1 - score[0]
     time_taken = time.time() - start
     return f"LABEL: {label}\nCERTAINTY: {score[0]:.2f}\nCOMPUTE TIME: {time_taken:.5f}"
 
