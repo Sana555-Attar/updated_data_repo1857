@@ -5,7 +5,6 @@ from uuid import uuid4
 
 import joblib
 from clearml import Dataset, Task
-from datasets import load_dataset
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
