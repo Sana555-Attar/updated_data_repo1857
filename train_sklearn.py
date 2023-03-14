@@ -88,6 +88,8 @@ class SklearnTrainer():
 
         y_pred = self.pipeline.predict(test)
         self.task.get_logger().report_single_value("Accuracy", accuracy_score(y_test, y_pred))
+        accuracy = accuracy_score(y_test, y_pred) 
+        self.task.get_logger().report_scalar(title='Performance', series='Accuracy',value=accuracy,iteration=0)
         plot_confusion_matrix(
             y_test,
             y_pred,

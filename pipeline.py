@@ -26,6 +26,7 @@ def compare_metrics_and_publish_best(**kwargs):
     for node_name, training_task_id in kwargs.items():
         # Get the original task based on the ID we got from the pipeline
         task = Task.get_task(task_id=training_task_id)
+        print(f"task.get_reported_scalars() {task.get_reported_scalars()}")
         accuracy = task.get_reported_scalars()['Performance']['Accuracy']['y'][0]
         model_id = task.get_models()['output'][0].id
         # Check if accuracy is better than current best, if so, overwrite current best
@@ -36,8 +37,8 @@ def compare_metrics_and_publish_best(**kwargs):
             print(f"New current best model: {node_name}")
 
     # Print the final best model details and log it as an output model on this step
-    print(f"Final best model: {current_best}")
-    out_model = OutputModel(name="best_pipeline_model", base_model_id=current_best.get('model_id'), tags=['pipeline_winner'])
+    print(f"Final best model: {model_id}")
+    out_model = OutputModel(name="best_pipeline_model", base_model_id=model_id, tags=['pipeline_winner'])
     out_model.publish()
     print(f'out_model.published {out_model.published}')
 
@@ -51,21 +52,13 @@ pipe = PipelineController(
 )
 
 pipe.set_default_execution_queue('CPU Queue')
-pipe.add_parameter('C', [1,0.95,0.9])
+pipe.add_parameter('C', [1.0,0.95,0.9])
 #pipe.add_parameter('query_date', '2022-01-01')
 
 pipe.add_step(
     name='data_preprocessing',
     base_task_project='sarcasm_detector',
     base_task_name='preprocess data'
-)
-pipe.add_step(
-    name='train_sklearn',
-    parents=['data_preprocessing'],
-    base_task_project='sarcasm_detector',
-    base_task_name='Sklearn Training',
-    pre_execute_callback=pre_execute_callback_example,
-    post_execute_callback=post_execute_callback_example
 )
 training_nodes = []
 # Seeds should be pipeline arguments
