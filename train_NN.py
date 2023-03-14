@@ -39,7 +39,7 @@ class SarcasmTrainer:
 
        def get_data(self):
                 local_dataset_path = Path(Dataset.get(
-                    dataset_project="tf_sarcasm_detector",dataset_name="tf_sarcasm_dataset",alias="tf_sarcasm_dataset"
+                    dataset_project="sarcasm_detector",dataset_name="sarcasm_dataset",alias="sarcasm_dataset"
                 ).get_local_copy())
 
                 data_files=[str(local_dataset_path / csv_path) for csv_path in os.listdir(local_dataset_path)]
@@ -115,7 +115,7 @@ class SarcasmTrainer:
 
 if __name__ == '__main__':
     #Task.add_requirements("torch")
-    task = Task.init(project_name="tf_sarcasm_detector", task_name="TF 2.0 Sequence Model Training")
+    task = Task.init(project_name="sarcasm_detector", task_name="TF 2.0 Sequence Model Training")
 
     params = {
           'vocab_size' : 10000,

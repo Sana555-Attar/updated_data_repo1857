@@ -3,8 +3,8 @@ import tensorflow as tf
 import pickle
 
 #get the task
-tsk = Task.init('sarcasm_detector','inferenceNN','inference')
-task = Task.get_task('6a25d292a8ce4628ad3a77ccbca1e7b4')
+tsk = Task.init('sarcasm_detector','TF 2.0 Model Inference','inference')
+task = Task.get_task('caec4160faed4bafb009721f2fcf1e98')
 
 #load the model
 transformer_model_path = task.models.data['output'][0].get_local_copy()

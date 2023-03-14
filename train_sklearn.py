@@ -20,7 +20,7 @@ from utils import plot_confusion_matrix
 class SklearnTrainer():
     def __init__(self, model='LinearRegression', seed=42, subset_size=0):
         self.task = Task.init(
-            project_name="tf_sarcasm_detector",
+            project_name="sarcasm_detector",
             task_name="Sklearn Training",
             output_uri=True
         )
@@ -59,9 +59,9 @@ class SklearnTrainer():
 
     def get_data(self):
                           
-             local_dataset_path = Path(Dataset.get(dataset_project="tf_sarcasm_detector",
-                                                   dataset_name="tf_sarcasm_dataset",
-                                                   alias="tf_sarcasm_dataset").get_local_copy())
+             local_dataset_path = Path(Dataset.get(dataset_project="sarcasm_detector",
+                                                   dataset_name="sarcasm_dataset",
+                                                   alias="sarcasm_dataset").get_local_copy())
              data_files=[str(local_dataset_path / csv_path) for csv_path in os.listdir(local_dataset_path)]
              data = []
              for filename in data_files:

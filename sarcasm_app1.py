@@ -11,9 +11,9 @@ import time
 # from transformers import pipeline
 import tensorflow as tf
 import pickle
-import sklearn
 
-task = Task.init('sarcasm_detector', "Gradio App: Sarcasm Solution",'inference')
+
+#task = Task.init('tf_sarcasm_detector', "tf_sarcasm_inference",'inference')
 
 def get_model_And_tokenizer(trainig_task_id):
 
@@ -43,7 +43,6 @@ def classify_DNN(sentence):
         label = 'SARCASTIC'
     else:
         label = 'NORMAL'
-        score[0] = 1 - score[0]
     time_taken = time.time() - start
     return f"LABEL: {label}\nCERTAINTY: {score[0]:.2f}\nCOMPUTE TIME: {time_taken:.5f}"
 
@@ -94,10 +93,10 @@ def log_to_csv(text, model_output, csv_name, count, prefix=""):
 def create_clearml_dataset_version(csv_filename, amount, counter):
     paths = glob.glob(str(Path("flagged") / f"*_{csv_filename}"))
     if paths:
-        latest_clearml_dataset_id = Dataset.get(dataset_project="sarcasm_detector", dataset_name="sarcasm_dataset").id
+        latest_clearml_dataset_id = Dataset.get(dataset_project="Sana1_sarcasm_detector", dataset_name="sarcasm_dataset").id
         print(f"{latest_clearml_dataset_id=}")
         updated_dataset = Dataset.create(
-            dataset_project="sarcasm_detector",
+            dataset_project="Sana1_sarcasm_detector",
             dataset_name="sarcasm_dataset",
             parent_datasets=[latest_clearml_dataset_id]
         )
@@ -109,34 +108,37 @@ def create_clearml_dataset_version(csv_filename, amount, counter):
         return f"{uuid4()}.csv", 0, "0 labeled samples"
     return csv_filename, amount, counter
 
-demo = gr.Blocks(css="background-color: yellow")
+demo = gr.Blocks(css="style.css")
 with demo:
     # transformers_callback = ClearMLDatasetLogger()
     # logistic_callback = ClearMLDatasetLogger()
     amount_labeled_var = gr.State(0)
     csv_filename = gr.State(f"{uuid4()}.csv")
 
+    
     with gr.Row():
-        gr.Label("SARCASM DETECTION",color="#BF5FFF")
-    """with gr.Row():
-        with gr.Column():
-            gr.Label("Sheldon's quest to understand Leonard's sarcasm",color="#BF5FFF")"""
+        logo_image = gr.Image(value="JARVIS_Logo.png", source="upload",elem_id="img1",show_label=False)
+        gr.Label("SARCASM DETECTION", elem_id="Warning")
+
     with gr.Row():
-        with gr.Column():
-            text = gr.Textbox(label="Model input sentence")
-            b1 = gr.Button("Classify Sarcasm")
-    with gr.Row():
-        with gr.Column():
-            output_transformer = gr.Textbox(label="Model 1")
-            b2 = gr.Button("Model 1 was Wrong")
-        with gr.Column():
-            output_logistic = gr.Textbox(label="Model 2")
-            b3 = gr.Button("Model 2 was Wrong")
-    with gr.Row():
-        with gr.Column():
-            counter = gr.Label("0 labeled samples")
-        with gr.Column():
-            b4 = gr.Button(f"Package Labeled Samples")
+        with gr.Row():
+            with gr.Column():
+                text = gr.Textbox(label="Model input sentence")
+                b1 = gr.Button("Classify Sarcasm",elem_id="Warning1")
+            
+        with gr.Row():
+            with gr.Column():
+                output_transformer = gr.Textbox(label="Model 1")
+                b2 = gr.Button("Model 1 was Wrong",elem_id="Warning1")
+            with gr.Column():
+                output_logistic = gr.Textbox(label="Model 2")
+                b3 = gr.Button("Model 2 was Wrong",elem_id="Warning1")
+
+        with gr.Row().style(equal_height=True):
+            with gr.Column():
+                counter = gr.Label("0 labeled samples")
+            #with gr.Column():
+                b4 = gr.Button(f"Package Labeled Samples",elem_id="Warning1")
 
     # This needs to be called at some point prior to the first call to callback.flag()
     # transformers_callback.setup([text, output_transformer, csv_filename, amount_labeled_var], "flagged_transformer")
@@ -152,9 +154,9 @@ with demo:
 
     # Package the current labels and ship them as a ClearML Dataset
     b4.click(create_clearml_dataset_version, inputs=[csv_filename, amount_labeled_var, counter], outputs=[csv_filename, amount_labeled_var, counter])
-
-demo.launch(share=True,server_name = "0.0.0.0", server_port=7860)
-task.close()
+        #demo1.launch()
+demo.launch()#share=True)logo_image = gr.Image(value="/home/oem/Demo1Abhijit/tf_sarcasm_Detector/JARVIS_Logo1.png", shape=[], source="upload", show_label=False)
+#task.close()
 
 
 

@@ -1,9 +1,9 @@
 from clearml import Model, Task
 import joblib
 
-tsk = Task.init('sarcasm_detector','inference SKLEARN','inference')
+tsk = Task.init('sarcasm_detector','SKLEARN model inference ','inference')
 
-sklearn_model_path = Model(model_id="baefc06449a0485f8a7f2887c934c798").get_local_copy()
+sklearn_model_path = Model(model_id="9ac90d026bd044209958ffd80433a761").get_local_copy()
 
 sklearn_pipeline = joblib.load(sklearn_model_path)
 

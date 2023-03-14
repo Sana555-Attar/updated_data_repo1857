@@ -1,0 +1,28 @@
+#Warning {
+  color: white;
+  background-color: #99CCFF;
+
+}
+
+#img1 {
+  flex: 0 0 auto;
+  width: 150px;
+  background-color: #0F0F2D;
+}
+
+#Warning1 {
+  background-color: #0095eb;
+}
+
+.gradio-container {
+  
+  background-color: #24293c;
+  width: 100%;
+  
+}
+
+/* @media only screen and (max-width: 800px) {
+  .gradio-container {
+    background-color: #24293c;
+  }
+} */

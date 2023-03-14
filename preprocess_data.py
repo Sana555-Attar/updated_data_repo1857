@@ -16,7 +16,7 @@ def get_csv(file_path):
     test = data.iloc[int(len(data)*0.90):,:]
     
     return train, test
-        
+    
 
 #get_csv('Sarcasm_Headlines_Dataset.json','train.csv')
 train, test = get_csv('Sarcasm_Headlines_Dataset.json')
